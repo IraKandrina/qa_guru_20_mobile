@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static io.appium.java_client.AppiumBy.id;
@@ -18,7 +20,7 @@ public class AndroidTests extends TestBase {
     void successfulSearchTest() {
         step("Perform search", () -> {
             $(AppiumBy.accessibilityId("Search Wikipedia")).click();
-            $(AppiumBy.id("org.wikipedia.alpha:id/search_src_text")).sendKeys("Java");
+            $(AppiumBy.id("org.wikipedia.alpha:id/search_src_text")).sendKeys("HTML");
         });
         step("Verify results", () ->
                 $$(AppiumBy.id("org.wikipedia.alpha:id/search_container"))
@@ -37,11 +39,12 @@ public class AndroidTests extends TestBase {
             $$(id("org.wikipedia.alpha:id/page_list_item_title"))
                     .shouldHave(sizeGreaterThan(0));
         });
-        step("Open article", () -> {
-            $(id("org.wikipedia.alpha:id/search_container")).click();
-        });
-        step("Click on the back button", () -> {
-            $(id("org.wikipedia.alpha:id/view_wiki_error_button")).click();
+        step("Open article", () ->
+                $$(AppiumBy.id("org.wikipedia.alpha:id/search_container")).get(0).click()
+        );
+        step("Verify results", () -> {
+            $(AppiumBy.id("org.wikipedia.alpha:id/view_wiki_error_button")).shouldBe(visible);
+            $(AppiumBy.id("org.wikipedia.alpha:id/view_wiki_error_text")).shouldHave(text("An error occurred"));
         });
     }
 }
