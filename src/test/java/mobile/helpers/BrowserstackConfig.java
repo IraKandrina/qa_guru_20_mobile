@@ -15,9 +15,6 @@ public interface BrowserstackConfig extends Config {
     @Key("key")
     String getKey();
 
-    @Key("baseUrl")
-    String getBaseUrl();
-
     @Key("app")
     String getApp();
 
