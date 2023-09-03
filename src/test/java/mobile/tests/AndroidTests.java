@@ -40,7 +40,7 @@ public class AndroidTests extends TestBase {
                     .shouldHave(sizeGreaterThan(0));
         });
         step("Open article", () ->
-                $$(AppiumBy.id("org.wikipedia.alpha:id/search_container")).get(0).click()
+                $$(AppiumBy.id("org.wikipedia.alpha:id/page_list_item_container")).first().click()
         );
         step("Verify results", () -> {
             $(AppiumBy.id("org.wikipedia.alpha:id/view_wiki_error_button")).shouldBe(visible);
